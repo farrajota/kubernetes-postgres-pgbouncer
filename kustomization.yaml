@@ -1,0 +1,28 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: database
+
+resources:
+- namespace.yaml
+- secrets.yaml
+- postgres.yaml
+- pgbouncer.yaml
+
+images:
+- name: POSTGRES
+  newName: postgres
+  newTag: 12-alpine
+- name: PGBOUNCER
+  newName: pgbouncer/pgbouncer
+  newTag: "1.14.0"
+
+configMapGenerator:
+- name: config-authentication
+  files:
+  - entrypoint.sh
+- name: config-database
+  files:
+  - pgbouncer.sql
+  - sandbox.sql

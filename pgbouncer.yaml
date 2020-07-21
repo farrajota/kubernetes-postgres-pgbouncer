@@ -1,0 +1,92 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgbouncer
+  namespace: database
+  labels:
+    app: pgbouncer
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: tcp
+    port: 5439
+    targetPort: tcp
+  selector:
+    app: pgbouncer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgbouncer
+  namespace: database
+  labels:
+    app: pgbouncer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgbouncer
+  template:
+    metadata:
+      labels:
+        app: pgbouncer
+    spec:
+      containers:
+      - name: pgbouncer
+        image: PGBOUNCER
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5439
+          name: tcp
+        command:
+        - sh
+        - /opt/pgbouncer/entrypoint.sh
+        env:
+        - name: DATABASES_HOST
+          value: pg.database.svc.cluster.local
+        - name: DATABASES_PORT
+          value: "5432"
+        - name: DATABASES_DBNAME
+          value: pgbouncer
+        - name: PGBOUNCER_LISTEN_PORT
+          value: "5439"
+        - name: PGBOUNCER_MAX_CLIENT_CONN
+          value: "200"
+        - name: PGBOUNCER_AUTH_TYPE
+          value: md5
+        - name: PGBOUNCER_AUTH_QUERY
+          value: "SELECT p_user, p_password FROM public.lookup($1)"
+        - name: PGBOUNCER_AUTH_FILE
+          value: "/etc/pgbouncer/userlist.txt"
+        - name: PGBOUNCER_ADMIN_USERS
+          valueFrom:
+            secretKeyRef:
+              name: pgbouncer
+              key: user
+        - name: PGBOUNCER_AUTH_USER
+          valueFrom:
+            secretKeyRef:
+              name: pgbouncer
+              key: user
+        - name: PGBOUNCER_AUTH_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: pgbouncer
+              key: password
+        resources:
+          limits:
+            cpu: "250m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+        volumeMounts:
+          - name: config
+            mountPath: /opt/pgbouncer/entrypoint.sh
+            subPath: entrypoint.sh
+      volumes:
+      - name: config
+        configMap:
+          name: config-authentication
