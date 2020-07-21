@@ -22,12 +22,12 @@ kubernetes environment.
 minikube start
 ```
 
-2. Create the k8s resources
+2. Generate k8s deploy manifest
 ```bash
 kubectl kustomize > deploy.yaml
 ```
 
-3. Apply the generated manifest
+3. Create the k8s resources
 ```bash
 kubectl create -f deploy.yaml
 ```
