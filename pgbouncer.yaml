@@ -48,8 +48,6 @@ spec:
           value: pg.database.svc.cluster.local
         - name: DATABASES_PORT
           value: "5432"
-        - name: DATABASES_DBNAME
-          value: pgbouncer
         - name: PGBOUNCER_LISTEN_PORT
           value: "5439"
         - name: PGBOUNCER_MAX_CLIENT_CONN
