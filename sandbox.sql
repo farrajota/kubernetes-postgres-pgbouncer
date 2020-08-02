@@ -1,7 +1,6 @@
 BEGIN;
 CREATE ROLE pgbouncer_admin WITH LOGIN ENCRYPTED PASSWORD 'password_pgbouncer';
 CREATE ROLE user1 WITH LOGIN ENCRYPTED PASSWORD 'password_user1';
-CREATE ROLE user2 WITH LOGIN ENCRYPTED PASSWORD 'password_user2';
 COMMIT;
 
 CREATE DATABASE sandbox;
@@ -9,6 +8,7 @@ CREATE DATABASE sandbox;
 
 BEGIN;
 CREATE TABLE test(value TEXT);
+GRANT ALL on TABLE test TO user1;
 CREATE FUNCTION public.lookup (
     INOUT p_user     name,
     OUT   p_password text
