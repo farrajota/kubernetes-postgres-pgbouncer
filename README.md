@@ -34,7 +34,7 @@ kubectl create -f deploy.yaml
 
 4. Test the setup
 ```bash
-kubectl -n database exec -it pg-0 -- bash -c 'PGPASSWORD=password_user1 psql -U user1 -h pgbouncer -p 5439 -d sandbox -c " SELECT current_database();"'
+kubectl -n database exec -it pg-0 -- bash -c 'PGPASSWORD=password_user1 psql -U user1 -h pgbouncer -p 5439 -d sandbox -c " SELECT * from test"'
 ```
 
 5. Destroy the k8s resources
