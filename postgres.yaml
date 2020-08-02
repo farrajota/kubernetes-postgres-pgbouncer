@@ -51,9 +51,6 @@ spec:
         - name: data
           mountPath: /var/lib/postgresql/data
         - name: config
-          mountPath: /docker-entrypoint-initdb.d/pgbouncer.sql
-          subPath: pgbouncer.sql
-        - name: config
           mountPath: /docker-entrypoint-initdb.d/sandbox.sql
           subPath: sandbox.sql
         resources:

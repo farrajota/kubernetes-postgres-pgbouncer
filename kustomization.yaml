@@ -13,7 +13,7 @@ resources:
 images:
 - name: POSTGRES
   newName: postgres
-  newTag: 12-alpine
+  newTag: "12-alpine"
 - name: PGBOUNCER
   newName: pgbouncer/pgbouncer
   newTag: "1.14.0"
@@ -24,5 +24,4 @@ configMapGenerator:
   - entrypoint.sh
 - name: config-database
   files:
-  - pgbouncer.sql
   - sandbox.sql
