@@ -52,6 +52,8 @@ rm deploy.yaml
 - https://www.pgbouncer.org/config.html
 - https://gitlab.com/aztek-io/oss/containers/pgbouncer-container
 - https://www.cybertec-postgresql.com/en/pgbouncer-authentication-made-easy/
+- https://www.depesz.com/2012/12/02/what-is-the-point-of-bouncing/
+- https://www.enterprisedb.com/postgres-tutorials/challenges-setting-maxconnections-and-why-you-should-use-connection-pooler
 
 # License
 
