@@ -9,7 +9,7 @@ CREATE DATABASE sandbox;
 BEGIN;
 CREATE TABLE test(value TEXT);
 GRANT ALL on TABLE test TO user1;
-CREATE FUNCTION public.lookup (
+CREATE OR REPLACE FUNCTION public.lookup (
     INOUT p_user     name,
     OUT   p_password text
 ) RETURNS record
